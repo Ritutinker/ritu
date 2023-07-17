@@ -1,0 +1,48 @@
+mysql> create database RITU;
+Query OK, 1 row affected (0.04 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| ritu               |
+| sys                |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql> use ritu;
+Database changed
+mysql> desc ritu;
+ERROR 1146 (42S02): Table 'ritu.ritu' doesn't exist
+mysql> show tables;
+Empty set (0.03 sec)
+
+mysql> create table doctor(id int primary key ,name varchar(10),department varchar(10),patient varchar(50));
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> desc table doctor;
++----+-------------+--------+------------+------+---------------+------+---------+------+------+----------+-------+
+| id | select_type | table  | partitions | type | possible_keys | key  | key_len | ref  | rows | filtered | Extra |
++----+-------------+--------+------------+------+---------------+------+---------+------+------+----------+-------+
+|  1 | SIMPLE      | doctor | NULL       | ALL  | NULL          | NULL | NULL    | NULL |    1 |   100.00 | NULL  |
++----+-------------+--------+------------+------+---------------+------+---------+------+------+----------+-------+
+1 row in set, 1 warning (0.02 sec)
+
+mysql> select *from doctor;
+Empty set (0.00 sec)
+
+mysql> insert into doctor values(1,'RITU','DENTIST','rudhra');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select *from doctor;
++----+------+------------+---------+
+| id | name | department | patient |
++----+------+------------+---------+
+|  1 | RITU | DENTIST    | rudhra  |
++----+------+------------+---------+
+1 row in set (0.00 sec)
+
+mysql> create databases;
