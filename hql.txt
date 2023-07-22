@@ -1,0 +1,225 @@
+package com.hibernate;
+
+import java.util.List;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+
+/**
+ * Hello world!
+ *
+ */
+public class App 
+{
+    public static void main( String[] args )
+    {
+       Session session=HiberUtil.getSession();
+       
+        Book1 b=new Book1();
+        b.setBook_Title("ABC");
+        b.setPrice(900);
+        
+   
+        Book1 b1=new Book1();
+        b1.setBook_Title("java");
+        b1.setPrice(600);
+        
+        Book1 b2=new Book1();
+        b2.setBook_Title("c++");
+        b2.setPrice(700);
+        
+        Book1 b3=new Book1();
+        b3.setBook_Title("Python");
+        b3.setPrice(900);
+        
+      Transaction t =session.beginTransaction();
+       
+       //save session
+       session.save(b);
+       session.save(b1);
+       session.save(b2);
+       session.save(b3);
+       
+        /*    //get the data
+       Query q=session.createQuery("Select Book_Title from Book ");
+       List<String> blist=q.list();
+       for(String bl:blist) {
+    	   System.out.println(b);
+       }
+       */
+      /* Query q1=session.createQuery("From Book1");
+      q1.setFirstResult(1);
+        List<Book1> blist1=q1.list();
+        System.out.println(b);*/
+       
+    /*   //delete the data
+       q=session.createQuery("delete from Book "+ "where bid=:bid");
+      // q.setParameter("bname", "stu");
+       q.setParameter("bid", 4);
+     //  t=session.beginTransaction();
+       q.executeUpdate();*/
+       
+      
+   /*    q1=session.createQuery("update Book set Book_Title=:bname "+ "where bid=:id");
+       q1.setParameter("bname", "English");
+       q1.setParameter("id", 3);
+   //    t=session.beginTransaction();
+       q1.executeUpdate();*/
+      
+         t.commit();
+       session.close();
+    }
+}
+
+.................................................
+package com.hibernate;
+
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.query.Query;
+
+/**
+ * Hello world!
+ *
+ */
+public class App 
+{
+    public static void main( String[] args )
+    {
+       Session session=HiberUtil.getSession();
+       
+        Book1 b=new Book1();
+        b.setBook_Title("ABC");
+        b.setPrice(900);
+        
+   
+        Book1 b1=new Book1();
+        b1.setBook_Title("java");
+        b1.setPrice(600);
+        
+        Book1 b2=new Book1();
+        b2.setBook_Title("c++");
+        b2.setPrice(700);
+        
+        Book1 b3=new Book1();
+        b3.setBook_Title("Python");
+        b3.setPrice(900);
+        
+      Transaction t =session.beginTransaction();
+       
+       //save session
+       session.save(b);
+       session.save(b1);
+       session.save(b2);
+       session.save(b3);
+       
+        /*    //get the data
+       Query q=session.createQuery("Select Book_Title from Book ");
+       List<String> blist=q.list();
+       for(String bl:blist) {
+    	   System.out.println(b);
+       }
+       */
+     
+       
+    /*   //delete the data
+       q=session.createQuery("delete from Book "+ "where bid=:bid");
+      // q.setParameter("bname", "stu");
+       q.setParameter("bid", 4);
+     //  t=session.beginTransaction();
+       q.executeUpdate();*/
+       
+      
+   /*    q1=session.createQuery("update Book set Book_Title=:bname "+ "where bid=:id");
+       q1.setParameter("bname", "English");
+       q1.setParameter("id", 3);
+   //    t=session.beginTransaction();
+       q1.executeUpdate();*/
+   /*    //Aggeration
+       Query q1=session.createQuery("Select max(price) from  Book1");
+       List<Long> maxPrice=q1.list();
+       System.out.println("Max price "+maxPrice);
+       */
+
+  /*        Query q1=session.createQuery("Select count(bid) from  Book1");
+           List<Long> bid=q1.list();
+           System.out.println("Max price "+bid);*/
+         t.commit();
+         //hcql(hiber critearea query language)
+         @SuppressWarnings("deprection")
+         Criteria c=session.createCriteria(Book1.class);
+         c.add(Restrictions.gt("price",(long)700));
+         c.addOrder(Order.desc("price"));
+         List<Book1> blist=c.list();
+         System.out.println(blist);
+       session.close();
+    }
+}
+...........................
+package com.hibernate;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
+public class Book1 {
+	@Id
+	@GeneratedValue
+private int bid;
+@Column(name="bname")
+private String Book_Title;
+@Column(name="btitle")
+private int price;
+
+public Book1(int bid, String Book_Title, int price) {
+	super();
+	this.bid = bid;
+	this.Book_Title = Book_Title;
+	this.price = price;
+}
+
+public Book1() {
+	// TODO Auto-generated constructor stub
+}
+
+public int getBid() {
+	return bid;
+}
+
+public void setBid(int bid) {
+	this.bid = bid;
+}
+
+public String getBook_Title() {
+	return Book_Title;
+}
+
+public void setBook_Title(String book_Title) {
+	Book_Title = book_Title;
+}
+
+public int getPrice() {
+	return price;
+}
+
+public void setPrice(int price) {
+	this.price = price;
+}
+
+@Override
+public String toString() {
+	return "Book [bid=" + bid + ", Book_Title=" + Book_Title + ", price=" + price + "]";
+}
+
+
+}
+
+...........................

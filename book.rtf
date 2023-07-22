@@ -1,0 +1,400 @@
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+{\colortbl ;\red192\green192\blue192;\red255\green255\blue0;\red0\green255\blue0;\red255\green255\blue255;\red0\green128\blue128;\red128\green128\blue0;\red158\green124\blue124;\red0\green176\blue80;\red247\green150\blue70;\red79\green129\blue189;\red155\green187\blue89;}
+{\*\generator Riched20 10.0.22000}\viewkind4\uc1 
+\pard\sa200\sl276\slmult1\f0\fs22\lang9\par
+mysql> use ritu;\par
+Database changed\par
+mysql> show tables;\par
++----------------+\par
+| Tables_in_ritu |\par
++----------------+\par
+| book           |\par
+| days           |\par
+| department     |\par
+| lib            |\par
+| shirt          |\par
+| student        |\par
+| student1       |\par
+| studentt       |\par
++----------------+\par
+8 rows in set (0.01 sec)\par
+\par
+\highlight1\fs32 mysql> create table employee (eid int auto_increment primary key,ename varchar(30),DOJ date,salary long,deptid int,foreign key(deptid) references department(did));\par
+\highlight0\fs22 Query OK, 0 rows affected (0.06 sec)\par
+\par
+mysql> desc employee;\par
++--------+-------------+------+-----+---------+----------------+\par
+| Field  | Type        | Null | Key | Default | Extra          |\par
++--------+-------------+------+-----+---------+----------------+\par
+| eid    | int         | NO   | PRI | NULL    | auto_increment |\par
+| ename  | varchar(30) | YES  |     | NULL    |                |\par
+| DOJ    | date        | YES  |     | NULL    |                |\par
+| salary | mediumtext  | YES  |     | NULL    |                |\par
+| deptid | int         | YES  | MUL | NULL    |                |\par
++--------+-------------+------+-----+---------+----------------+\par
+5 rows in set (0.01 sec)\par
+\par
+\highlight2 mysql>  alter table employee modify salary bigint;\par
+\highlight0 Query OK, 0 rows affected (0.09 sec)\par
+Records: 0  Duplicates: 0  Warnings: 0\par
+\par
+\highlight3 mysql> insert into employee values(1,'ritu','2022-09-12',26000,100),(2,'rudhra','2022-09-16',29000,101),(3,'krishna','2022-09-14',52000,102);\par
+\highlight0 Query OK, 3 rows affected (0.01 sec)\par
+Records: 3  Duplicates: 0  Warnings: 0\par
+\par
+mysql> select * from employee;\par
++-----+---------+------------+--------+--------+\par
+| eid | ename   | DOJ        | salary | deptid |\par
++-----+---------+------------+--------+--------+\par
+|   1 | ritu    | 2022-09-12 |  26000 |    100 |\par
+|   2 | rudhra  | 2022-09-16 |  29000 |    101 |\par
+|   3 | krishna | 2022-09-14 |  52000 |    102 |\par
++-----+---------+------------+--------+--------+\par
+3 rows in set (0.00 sec)\par
+\par
+\highlight1 mysql> update employee set ename='krishna' ,salary=26000;\par
+\highlight0 Query OK, 3 rows affected (0.01 sec)\par
+Rows matched: 3  Changed: 3  Warnings: 0\par
+\par
+mysql> select * from employee;\par
++-----+---------+------------+--------+--------+\par
+| eid | ename   | DOJ        | salary | deptid |\par
++-----+---------+------------+--------+--------+\par
+|   1 | krishna | 2022-09-12 |  26000 |    100 |\par
+|   2 | krishna | 2022-09-16 |  26000 |    101 |\par
+|   3 | krishna | 2022-09-14 |  26000 |    102 |\par
++-----+---------+------------+--------+--------+\par
+3 rows in set (0.00 sec)\par
+\par
+mysql> select * from department;\par
++-----+--------------+-------------------------+\par
+| did | dname        | dtask                   |\par
++-----+--------------+-------------------------+\par
+| 100 | admin            | NULL                   |\par
+| 101 | operation      | NULL                    |\par
+| 102 | service          | NULL                    |\par
+| 201 | Traning         | To Train for a computer |\par
+| 202 | Management| To manage company       |\par
+| 203 | c                    | NULL                    |\par
+| 204 | HOUSE KEEPER | working house           |\par
+| 205 | boss             | not work in office      |\par
++-----+--------------+-------------------------+\par
+8 rows in set (0.00 sec)\par
+\par
+mysql> insert into employee values(4,'ritu','2022-09-12',26000,201);\par
+Query OK, 1 row affected (0.01 sec)\par
+\par
+mysql> insert into employee values(5,'rudhra','2022-09-12',26000,201);\par
+Query OK, 1 row affected (0.01 sec)\par
+\par
+mysql> insert into employee values(6,'rudhr','2022-09-12',29000,201);\par
+Query OK, 1 row affected (0.01 sec)\par
+\par
+mysql> insert into employee values(7,'rudhu','2022-09-12',80000,201);\par
+Query OK, 1 row affected (0.01 sec)\par
+\par
+\cf4\highlight5 mysql> select deptid,max(salary) as 'max salary of dept' from employee group by deptid;\par
+\cf0\highlight0 +--------+--------------------+\par
+| deptid | max salary of dept |\par
++--------+--------------------+\par
+|    100 |              26000 |\par
+|    101 |              26000 |\par
+|    102 |              26000 |\par
+|    201 |              80000 |\par
++--------+--------------------+\par
+4 rows in set (0.01 sec)\par
+\par
+\cf4\highlight6 mysql> select deptid,max(salary) as 'min salary of dept' from employee group by deptid;\par
+\cf0\highlight0 +--------+--------------------+\par
+| deptid | min salary of dept |\par
++--------+--------------------+\par
+|    100 |              26000 |\par
+|    101 |              26000 |\par
+|    102 |              26000 |\par
+|    201 |              80000 |\par
++--------+--------------------+\par
+4 rows in set (0.00 sec)\par
+\par
+\cf7\ul\fs48 mysql> select deptid,sum(salary) as 'sum salary of dept' from employee group by deptid;having sum (salary)=>10000;\par
+\cf0\ulnone\fs22 +--------+--------------------+\par
+| deptid | sum salary of dept |\par
++--------+--------------------+\par
+|    100 |              26000 |\par
+|    101 |              26000 |\par
+|    102 |              26000 |\par
+|    201 |             161000 |\par
++--------+--------------------+\par
+4 rows in set (0.00 sec)\par
+\par
+mysql> insert into employee values(8,'a','2022-09-12',50000,101);\par
+Query OK, 1 row affected (0.01 sec)\par
+\par
+mysql> insert into employee values(9,'b','2022-09-12',450000,101);\par
+Query OK, 1 row affected (0.00 sec)\par
+\par
+mysql> insert into employee values(10,'c','2022-09-12',540000,101);\par
+Query OK, 1 row affected (0.00 sec)\par
+\par
+\cf8\fs44 mysql> select deptid,min(salary) as 'min salary of dept' from employee group by deptid;\par
+\cf0\fs22 +--------+--------------------+\par
+| deptid | min salary of dept |\par
++--------+--------------------+\par
+|    100 |              26000 |\par
+|    101 |              26000 |\par
+|    102 |              26000 |\par
+|    201 |              26000 |\par
++--------+--------------------+\par
+4 rows in set (0.00 sec)\par
+\par
+\cf9\fs40 mysql> select deptid,max(salary) as 'max salary of dept' from employee group by deptid;\par
+\cf0\fs22 +--------+--------------------+\par
+| deptid | max salary of dept |\par
++--------+--------------------+\par
+|    100 |              26000 |\par
+|    101 |             540000 |\par
+|    102 |              26000 |\par
+|    201 |              80000 |\par
++--------+--------------------+\par
+4 rows in set (0.00 sec)\par
+\par
+mysql> select * from employee;\par
++-----+---------+------------+--------+--------+\par
+| eid | ename   | DOJ        | salary | deptid |\par
++-----+---------+------------+--------+--------+\par
+|   1 | krishna | 2022-09-12 |  26000 |    100 |\par
+|   2 | krishna | 2022-09-16 |  26000 |    101 |\par
+|   3 | krishna | 2022-09-14 |  26000 |    102 |\par
+|   4 | ritu        | 2022-09-12 |  26000 |    201 |\par
+|   5 | rudhra  | 2022-09-12 |  26000 |     201 |\par
+|   6 | rudhr    | 2022-09-12 |  29000 |     201 |\par
+|   7 | rudhu   | 2022-09-12 |  80000 |     201 |\par
+|   8 | a           | 2022-09-12 |  50000 |     101 |\par
+|   9 | b          | 2022-09-12  | 450000 |    101 |\par
+|  10 | c         | 2022-09-12  | 540000 |    101 |\par
++-----+---------+------------+--------+--------+\par
+10 rows in set (0.00 sec)\par
+\par
+mysql> show tables;\par
++----------------+\par
+| Tables_in_ritu |\par
++----------------+\par
+| book           |\par
+| days           |\par
+| department     |\par
+| employee       |\par
+| lib            |\par
+| shirt          |\par
+| student        |\par
+| student1       |\par
+| studentt       |\par
++----------------+\par
+9 rows in set (0.01 sec)\par
+\par
+mysql> desc book;\par
++--------+-------------+------+-----+---------+----------------+\par
+| Field  | Type        | Null | Key | Default | Extra          |\par
++--------+-------------+------+-----+---------+----------------+\par
+| bid    | int         | NO   | PRI | NULL    | auto_increment |\par
+| btitle | varchar(60) | YES  |     | NULL    |                |\par
+| author | varchar(30) | YES  |     | NULL    |                |\par
+| price  | int         | YES  |     | NULL    |                |\par
++--------+-------------+------+-----+---------+----------------+\par
+4 rows in set (0.01 sec)\par
+\par
+mysql> select * from book;\par
++-----+------------+--------+-------+\par
+| bid | btitle     | author | price |\par
++-----+------------+--------+-------+\par
+|  10 | java       | Ritu   |   900 |\par
+|  20 | c++        | Ritu   |   900 |\par
+|  30 | c          | Ritu   |   900 |\par
+|  40 | e commerce | ritu   |   100 |\par
+|  50 | e com      | ritu   |   100 |\par
+|  60 | e com      | ritu   |   100 |\par
++-----+------------+--------+-------+\par
+6 rows in set (0.01 sec)\par
+\par
+mysql> insert into book values(70,'c++','xyz',200);\par
+Query OK, 1 row affected (0.01 sec)\par
+\par
+mysql> insert into book values(80,'c','xyz',700);\par
+Query OK, 1 row affected (0.01 sec)\par
+\par
+mysql> insert into book values(15,'java','xyz',600);\par
+Query OK, 1 row affected (0.01 sec)\par
+\par
+mysql> select * from book;\par
++-----+------------+--------+-------+\par
+| bid | btitle     | author | price |\par
++-----+------------+--------+-------+\par
+|  10 | java       | Ritu   |   900 |\par
+|  15 | java       | xyz    |   600 |\par
+|  20 | c++        | Ritu   |   900 |\par
+|  30 | c            | Ritu   |   900 |\par
+|  40 | ecom    | ritu     | 100 |\par
+|  50 | e com   | ritu   |   100 |\par
+|  60 | e com   | ritu   |   100 |\par
+|  70 | c++       | xyz    |   200 |\par
+|  80 | c           | xyz    |   700 |\par
++-----+------------+--------+-------+\par
+9 rows in set (0.00 sec)\par
+\par
+\cf10\fs36 mysql> select bid,max(price) as 'max price of book' from book group by bid;\par
+\cf0\fs22 +-----+-------------------+\par
+| bid | max price of book |\par
++-----+-------------------+\par
+|  10 |               900 |\par
+|  15 |               600 |\par
+|  20 |               900 |\par
+|  30 |               900 |\par
+|  40 |               100 |\par
+|  50 |               100 |\par
+|  60 |               100 |\par
+|  70 |               200 |\par
+|  80 |               700 |\par
++-----+-------------------+\par
+9 rows in set (0.00 sec)\par
+\par
+\cf10\fs36 mysql> select bid,min(price) as 'min price of book' from book group by bid;\par
+\cf0\fs22 +-----+-------------------+\par
+| bid | min price of book |\par
++-----+-------------------+\par
+|  10 |               900 |\par
+|  15 |               600 |\par
+|  20 |               900 |\par
+|  30 |               900 |\par
+|  40 |               100 |\par
+|  50 |               100 |\par
+|  60 |               100 |\par
+|  70 |               200 |\par
+|  80 |               700 |\par
++-----+-------------------+\par
+9 rows in set (0.00 sec)\par
+\par
+\cf11\fs40 mysql> select bid,btitle,price from book where price<500 or price>900;\par
+\cf0\fs22 +-----+------------+-------+\par
+| bid | btitle     | price |\par
++-----+------------+-------+\par
+|  40 | e commerce |   100 |\par
+|  50 | e com      |   100 |\par
+|  60 | e com      |   100 |\par
+|  70 | c++        |   200 |\par
++-----+------------+-------+\par
+4 rows in set (0.00 sec)\par
+\par
+\cf11\fs36 mysql> select bid,btitle,price from book where price<700 or price>900;\par
+\cf0\fs22 +-----+------------+-------+\par
+| bid | btitle     | price |\par
++-----+------------+-------+\par
+|  15 | java       |   600 |\par
+|  40 | e commerce |   100 |\par
+|  50 | e com      |   100 |\par
+|  60 | e com      |   100 |\par
+|  70 | c++        |   200 |\par
++-----+------------+-------+\par
+5 rows in set (0.00 sec)\par
+\par
+\cf11\fs40 mysql> select bid ,count(btitle) from book group by bid;\par
+\cf0\fs22 +-----+---------------+\par
+| bid | count(btitle) |\par
++-----+---------------+\par
+|  10 |             1 |\par
+|  15 |             1 |\par
+|  20 |             1 |\par
+|  30 |             1 |\par
+|  40 |             1 |\par
+|  50 |             1 |\par
+|  60 |             1 |\par
+|  70 |             1 |\par
+|  80 |             1 |\par
++-----+---------------+\par
+9 rows in set (0.00 sec)\par
+\par
+\par
+mysql> desc book;\par
++--------+-------------+------+-----+---------+----------------+\par
+| Field  | Type        | Null | Key | Default | Extra          |\par
++--------+-------------+------+-----+---------+----------------+\par
+| bid    | int         | NO   | PRI | NULL    | auto_increment |\par
+| btitle | varchar(60) | YES  |     | NULL    |                |\par
+| author | varchar(30) | YES  |     | NULL    |                |\par
+| price  | int         | YES  |     | NULL    |                |\par
++--------+-------------+------+-----+---------+----------------+\par
+4 rows in set (0.01 sec)\par
+\par
+mysql> select * from book;\par
++-----+------------+--------+-------+\par
+| bid | btitle     | author | price |\par
++-----+------------+--------+-------+\par
+|  10 | java       | Ritu   |   900 |\par
+|  15 | java       | xyz    |   600 |\par
+|  20 | c++        | Ritu   |   900 |\par
+|  30 | c          | Ritu   |   900 |\par
+|  40 | e commerce | ritu   |   100 |\par
+|  50 | e com      | ritu   |   100 |\par
+|  60 | e com      | ritu   |   100 |\par
+|  70 | c++        | xyz    |   200 |\par
+|  80 | c          | xyz    |   700 |\par
++-----+------------+--------+-------+\par
+9 rows in set (0.00 sec)\par
+\par
+mysql> select btitle,min(price) from book group by btitle;\par
++------------+------------+\par
+| btitle     | min(price) |\par
++------------+------------+\par
+| java       |        600 |\par
+| c++        |        200 |\par
+| c          |        700 |\par
+| e commerce |        100 |\par
+| e com      |        100 |\par
++------------+------------+\par
+5 rows in set (0.00 sec)\par
+\par
+mysql> select btitle,max(price) from book group by btitle;\par
++------------+------------+\par
+| btitle     | max(price) |\par
++------------+------------+\par
+| java       |        900 |\par
+| c++        |        900 |\par
+| c          |        900 |\par
+| e commerce |        100 |\par
+| e com      |        100 |\par
++------------+------------+\par
+5 rows in set (0.00 sec)\par
+\par
+\cf11\highlight5\fs40 mysql> select btitle,sum(price) from book group by btitle;\par
+\cf0\highlight0\fs22 +------------+------------+\par
+| btitle     | sum(price) |\par
++------------+------------+\par
+| java       |       1500 |\par
+| c++        |       1100 |\par
+| c          |       1600 |\par
+| e commerce |        100 |\par
+| e com      |        200 |\par
++------------+------------+\par
+5 rows in set (0.00 sec)\par
+\par
+\cf4\highlight5\fs40 mysql> select btitle,avg(price) from book group by btitle;\par
+\cf0\highlight0\fs22 +------------+------------+\par
+| btitle     | avg(price) |\par
++------------+------------+\par
+| java       |   750.0000 |\par
+| c++        |   550.0000 |\par
+| c          |   800.0000 |\par
+| e commerce |   100.0000 |\par
+| e com      |   100.0000 |\par
++------------+------------+\par
+5 rows in set (0.00 sec)\par
+\cf4\highlight5\fs40 mysql> select btitle ,count(btitle) from book group by btitle;\par
+\cf0\highlight0\fs22 +------------+---------------+\par
+| btitle     | count(btitle) |\par
++------------+---------------+\par
+| java       |             2 |\par
+| c++        |             2 |\par
+| c          |             2 |\par
+| e commerce |             1 |\par
+| e com      |             2 |\par
++------------+---------------+\par
+5 rows in set (0.00 sec)\par
+}
+ 

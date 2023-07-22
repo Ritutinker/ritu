@@ -1,0 +1,43 @@
+https://www.remove.bg/upload
+
+E:\cli\spring-boot-cli-2.7.5-bin\bin>spring init --build=maven --dependencies=web,lombok springbootmaven
+Using service at https://start.spring.io
+Project extracted to 'E:\cli\spring-boot-cli-2.7.5-bin\bin\springbootmaven'
+E:\cli\spring-boot-cli-2.7.5-bin\bin>
+
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+               http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd
+           http://www.springframework.org/schema/util
+           http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+               
+     <util:set  set-class="java.util.HashSet" id="set1">
+        <value>9511813414 </value>
+		<value>9565797789</value>
+     </util:set>          
+
+    
+      <bean id="add" class="com.hibernate.Address" c:hno="101" c:area="kutub" c:city="Delhi"/>
+    
+      <bean id="studentbean1" class="com.hibernate.Student"  c:contacts-ref="set1">
+      
+         <constructor-arg  value="100" type="int" index="0"/>
+         
+         <constructor-arg  value="Manisha Agrawal" index="1"/>
+          
+         <constructor-arg  value="40" type="int" index="3"/>
+        
+      </bean>
+
+
+</beans>
+
+ctrl+shift +/=commented

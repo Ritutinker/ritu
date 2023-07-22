@@ -1,0 +1,270 @@
+https://chrome.google.com/webstore/detail/json-formatter/bcjindcccaagfpapjjmafapmmgkkhgoa?hl=en
+Microsoft Windows [Version 10.0.22000.978]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\admin>mysql -u root -p
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 10
+Server version: 8.0.30 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use ritu;
+Database changed
+mysql> select*from person;
++----------+-------+------+------------+------------+
+| aadharNo | name  | age  | mob        | DOB        |
++----------+-------+------+------------+------------+
+|      122 | qwery |   19 | 9234567890 | 2001-09-12 |
++----------+-------+------+------------+------------+
+1 row in set (0.00 sec)
+
+mysql> desc person;
++----------+-------------+------+-----+---------+----------------+
+| Field    | Type        | Null | Key | Default | Extra          |
++----------+-------------+------+-----+---------+----------------+
+| aadharNo | int         | NO   | PRI | NULL    | auto_increment |
+| name     | varchar(30) | NO   |     | NULL    |                |
+| age      | int         | YES  | UNI | NULL    |                |
+| mob      | varchar(10) | NO   | UNI | NULL    |                |
+| DOB      | date        | NO   |     | NULL    |                |
++----------+-------------+------+-----+---------+----------------+
+5 rows in set (0.01 sec)
+
+mysql> alter table person drop constraint person_chk_1;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc person;
++----------+-------------+------+-----+---------+----------------+
+| Field    | Type        | Null | Key | Default | Extra          |
++----------+-------------+------+-----+---------+----------------+
+| aadharNo | int         | NO   | PRI | NULL    | auto_increment |
+| name     | varchar(30) | NO   |     | NULL    |                |
+| age      | int         | YES  | UNI | NULL    |                |
+| mob      | varchar(10) | NO   | UNI | NULL    |                |
+| DOB      | date        | NO   |     | NULL    |                |
++----------+-------------+------+-----+---------+----------------+
+5 rows in set (0.01 sec)
+
+mysql>  insert into person(aadharNo,name,age,mob)values(102,'abc',20,9817654721);
+ERROR 1364 (HY000): Field 'DOB' doesn't have a default value
+mysql>  insert into person(aadharNo,name,age,mob,dob)values(102,'abc',20,9817654721,2000-09-09);
+ERROR 1292 (22007): Incorrect date value: '1982' for column 'DOB' at row 1
+mysql>  insert into person(aadharNo,name,age,mob,dob)values(102,'abc',20,9817654721,0000-00-00);
+Query OK, 1 row affected (0.01 sec)
+
+mysql>  insert into person(aadharNo,name,age,mob,dob)values(103,'abc',21,9817658721,0000-00-00);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select*from person;
++----------+-------+------+------------+------------+
+| aadharNo | name  | age  | mob        | DOB        |
++----------+-------+------+------------+------------+
+|      102 | abc   |   20 | 9817654721 | 0000-00-00 |
+|      103 | abc   |   21 | 9817658721 | 0000-00-00 |
+|      122 | qwery |   19 | 9234567890 | 2001-09-12 |
++----------+-------+------+------------+------------+
+3 rows in set (0.00 sec)
+
+mysql> update person set dob='2000-09-09';
+Query OK, 3 rows affected (0.01 sec)
+Rows matched: 3  Changed: 3  Warnings: 0
+
+mysql> update person set dob='2001-09-12' where id=102;
+ERROR 1054 (42S22): Unknown column 'id' in 'where clause'
+mysql> update person set dob='2001-09-12' where aadharNo=102;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> alter table person drop primary key;
+ERROR 1075 (42000): Incorrect table definition; there can be only one auto column and it must be defined as a key
+mysql> desc person;
++----------+-------------+------+-----+---------+----------------+
+| Field    | Type        | Null | Key | Default | Extra          |
++----------+-------------+------+-----+---------+----------------+
+| aadharNo | int         | NO   | PRI | NULL    | auto_increment |
+| name     | varchar(30) | NO   |     | NULL    |                |
+| age      | int         | YES  | UNI | NULL    |                |
+| mob      | varchar(10) | NO   | UNI | NULL    |                |
+| DOB      | date        | NO   |     | NULL    |                |
++----------+-------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> select*from person;
++----------+-------+------+------------+------------+
+| aadharNo | name  | age  | mob        | DOB        |
++----------+-------+------+------------+------------+
+|      102 | abc   |   20 | 9817654721 | 2001-09-12 |
+|      103 | abc   |   21 | 9817658721 | 2000-09-09 |
+|      122 | qwery |   19 | 9234567890 | 2000-09-09 |
++----------+-------+------+------------+------------+
+3 rows in set (0.00 sec)
+
+mysql> delete* from person;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '* from person' at line 1
+mysql> delete *  from person;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '*  from person' at line 1
+mysql> delete from person;
+Query OK, 3 rows affected (0.01 sec)
+
+mysql> alter table person drop primary key;
+ERROR 1075 (42000): Incorrect table definition; there can be only one auto column and it must be defined as a key
+mysql> show create table person;
++--------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table  | Create Table                                                                                                                                                                                                                                                                                                                                                                                                                   |
++--------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| person | CREATE TABLE `person` (
+  `aadharNo` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(30) NOT NULL,
+  `age` int DEFAULT NULL,
+  `mob` varchar(10) NOT NULL,
+  `DOB` date NOT NULL,
+  PRIMARY KEY (`aadharNo`),
+  UNIQUE KEY `mob` (`mob`),
+  UNIQUE KEY `age` (`age`),
+  CONSTRAINT `person_chk_2` CHECK (((`age` >= 15) and (`age` < 60)))
+) ENGINE=InnoDB AUTO_INCREMENT=123 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci |
++--------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> alter table person drop auto_increment;
+ERROR 1091 (42000): Can't DROP 'auto_increment'; check that column/key exists
+mysql> alter table person drop constraint auto_increment;
+ERROR 3940 (HY000): Constraint 'auto_increment' does not exist.
+mysql> alter table person modify aadharNo int;
+Query OK, 0 rows affected (0.08 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc person;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| aadharNo | int         | NO   | PRI | NULL    |       |
+| name     | varchar(30) | NO   |     | NULL    |       |
+| age      | int         | YES  | UNI | NULL    |       |
+| mob      | varchar(10) | NO   | UNI | NULL    |       |
+| DOB      | date        | NO   |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> alter table person drop primary key;
+Query OK, 0 rows affected (0.11 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc person;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| aadharNo | int         | NO   |     | NULL    |       |
+| name     | varchar(30) | NO   |     | NULL    |       |
+| age      | int         | YES  | UNI | NULL    |       |
+| mob      | varchar(10) | NO   | PRI | NULL    |       |
+| DOB      | date        | NO   |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> alter table person drop primary key;
+ERROR 1091 (42000): Can't DROP 'PRIMARY'; check that column/key exists
+mysql>
+mysql> show create table person;
++--------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table  | Create Table                                                                                                                                                                                                                                                                                                                                                     |
++--------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| person | CREATE TABLE `person` (
+  `aadharNo` int NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `age` int DEFAULT NULL,
+  `mob` varchar(10) NOT NULL,
+  `DOB` date NOT NULL,
+  UNIQUE KEY `mob` (`mob`),
+  UNIQUE KEY `age` (`age`),
+  CONSTRAINT `person_chk_2` CHECK (((`age` >= 15) and (`age` < 60)))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci |
++--------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql>  insert into person(aadharNo,name,age,mob,dob)values(103,'abc',21,9817658721,0000-00-00);
+Query OK, 1 row affected (0.01 sec)
+
+mysql>  insert into person(aadharNo,name,age,mob,dob)values(102,'abc',20,9817654721,0000-00-00);
+Query OK, 1 row affected (0.01 sec)
+
+mysql>  insert into person(aadharNo,name,age,mob,dob)values(102,'abc',28,5917654721,0000-00-00);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from person;
++----------+------+------+------------+------------+
+| aadharNo | name | age  | mob        | DOB        |
++----------+------+------+------------+------------+
+|      102 | abc  |   28 | 5917654721 | 0000-00-00 |
+|      102 | abc  |   20 | 9817654721 | 0000-00-00 |
+|      103 | abc  |   21 | 9817658721 | 0000-00-00 |
++----------+------+------+------------+------------+
+3 rows in set (0.00 sec)
+
+mysql> update person set dob='2001-09-12' where aadharNo=102;
+Query OK, 2 rows affected (0.01 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> update person set dob='2001-09-12' where aadharNo=103;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update person set dob='2001-09-11' where aadharNo=103;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from person;
++----------+------+------+------------+------------+
+| aadharNo | name | age  | mob        | DOB        |
++----------+------+------+------------+------------+
+|      102 | abc  |   28 | 5917654721 | 2001-09-12 |
+|      102 | abc  |   20 | 9817654721 | 2001-09-12 |
+|      103 | abc  |   21 | 9817658721 | 2001-09-11 |
++----------+------+------+------------+------------+
+3 rows in set (0.00 sec)
+
+mysql> show index in person;
++--------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Table  | Non_unique | Key_name | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Visible | Expression |
++--------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| person |          0 | mob      |            1 | mob         | A         |           1 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
+| person |          0 | age      |            1 | age         | A         |           1 |     NULL |   NULL | YES  | BTREE      |         |               | YES     | NULL       |
++--------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+2 rows in set (0.01 sec)
+
+mysql>  insert into person(aadharNo,name,age,mob,dob)values(105,'abc',29,5217654721,0000-00-00);
+Query OK, 1 row affected (0.00 sec)
+
+mysql>  insert into person(aadharNo,name,age,mob,dob)values(106,'abc',30,0217654721,0000-00-00);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> update person set dob='2001-09-20' where aadharNo=105;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update person set dob='2022-09-20' where aadharNo=106;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from person;
++----------+------+------+------------+------------+
+| aadharNo | name | age  | mob        | DOB        |
++----------+------+------+------------+------------+
+|      106 | abc  |   30 | 217654721  | 2022-09-20 |
+|      105 | abc  |   29 | 5217654721 | 2001-09-20 |
+|      102 | abc  |   28 | 5917654721 | 2001-09-12 |
+|      102 | abc  |   20 | 9817654721 | 2001-09-12 |
+|      103 | abc  |   21 | 9817658721 | 2001-09-11 |
++----------+------+------+------------+------------+
+5 rows in set (0.00 sec)
+
+mysql>

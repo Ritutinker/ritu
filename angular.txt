@@ -1,0 +1,82 @@
+<link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+<script src="../node_modules/jquery/dist/jquery.js"></script>  <script src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+Thakur Khushbu Deepaksinh2:23 PM
+@import "~bootstrap/dist/css/bootstrap.css"
+Thakur Khushbu Deepaksinh2:24 PM
+<link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+Thakur Khushbu Deepaksinh2:53 PM
+1. Open the Visual Studio code. 
+2. Create four components namely Home, About, Courses, Contact. 
+3. In the home component, create a code to display the key pointers about Anudip with an image. 
+4. In the About Page, add information about Anudip. 5. In services, add content of different courses available. 6. In contact, add a form where you can add Name, Email id and Message and a submit button.
+9416372647
+Microsoft Windows [Version 10.0.22000.1219]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\admin>npm install -g @angular/cli
+npm ERR! code ENOTFOUND
+npm ERR! syscall getaddrinfo
+npm ERR! errno ENOTFOUND
+npm ERR! network request to https://registry.npmjs.org/@angular%2fcli failed, reason: getaddrinfo ENOTFOUND registry.npmjs.org
+npm ERR! network This is a problem related to network connectivity.
+npm ERR! network In most cases you are behind a proxy or have bad network settings.
+npm ERR! network
+npm ERR! network If you are behind a proxy, please make sure that the
+npm ERR! network 'proxy' config is set properly.  See: 'npm help config'
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     C:\Users\admin\AppData\Local\npm-cache\_logs\2022-12-12T23_27_28_069Z-debug-0.log
+
+C:\Users\admin>
+C:\Users\admin>
+C:\Users\admin>
+C:\Users\admin>npm install -g @angular/cli
+npm WARN deprecated @npmcli/move-file@2.0.1: This functionality has been moved to @npmcli/fs
+npm WARN deprecated sourcemap-codec@1.4.8: Please use @jridgewell/sourcemap-codec instead
+
+added 231 packages, and audited 232 packages in 1m
+
+26 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+
+C:\Users\admin>npm fund
+admin
+
+
+C:\Users\admin>ng new DemoAppRitu
+? Would you like to share pseudonymous usage data about this project with the Angular Team
+at Google under Google's Privacy Policy at https://policies.google.com/privacy. For more
+details and how to change this setting, see https://angular.io/analytics. No
+Global setting: disabled
+Local setting: No local workspace configuration file.
+Effective status: disabled
+? Would you like to add Angular routing? No
+? Which stylesheet format would you like to use? CSS
+CREATE DemoAppRitu/angular.json (2727 bytes)
+CREATE DemoAppRitu/package.json (1044 bytes)
+CREATE DemoAppRitu/README.md (1065 bytes)
+CREATE DemoAppRitu/tsconfig.json (901 bytes)
+CREATE DemoAppRitu/.editorconfig (274 bytes)
+CREATE DemoAppRitu/.gitignore (548 bytes)
+CREATE DemoAppRitu/tsconfig.app.json (263 bytes)
+CREATE DemoAppRitu/tsconfig.spec.json (273 bytes)
+CREATE DemoAppRitu/.vscode/extensions.json (130 bytes)
+CREATE DemoAppRitu/.vscode/launch.json (474 bytes)
+CREATE DemoAppRitu/.vscode/tasks.json (938 bytes)
+CREATE DemoAppRitu/src/favicon.ico (948 bytes)
+CREATE DemoAppRitu/src/index.html (297 bytes)
+CREATE DemoAppRitu/src/main.ts (214 bytes)
+CREATE DemoAppRitu/src/styles.css (80 bytes)
+CREATE DemoAppRitu/src/assets/.gitkeep (0 bytes)
+CREATE DemoAppRitu/src/app/app.module.ts (314 bytes)
+CREATE DemoAppRitu/src/app/app.component.html (23083 bytes)
+CREATE DemoAppRitu/src/app/app.component.spec.ts (971 bytes)
+CREATE DemoAppRitu/src/app/app.component.ts (215 bytes)
+CREATE DemoAppRitu/src/app/app.component.css (0 bytes)
+√ Packages installed successfully.
+'git' is not recognized as an internal or external command,
+operable program or batch file.
+
+C:\Users\admin>

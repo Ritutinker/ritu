@@ -1,0 +1,93 @@
+MYSQL
+1.create a database;
+ create database practice;
+Query OK, 1 row affected (0.08 sec)
+2.use database;
+use pratice;
+3.create a table;
+mysql> create table Person3(name varchar(50),age tinyint(2),contact varchar(10));
+Query OK, 0 rows affected, 1 warning (0.03 sec)simple table;
+4. insert query;
+mysql> insert into person3 values('Ritu',20,9817229673);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into person3 values('Rani',20,9817229673);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into person3 values('Rudhra',20,9053423907);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into person3 values('krishna',20,7015821712);
+Query OK, 1 row affected (0.01 sec)
+
+mysql>insert into person3 values('Ramesh',20,9813127366);
+Query OK, 1 row affected (0.00 sec)
+5.mysql> describe person3                                         person3 ki value ke liye
+    -> ;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| name    | varchar(50) | YES  |     | NULL    |       |
+| age     | tinyint     | YES  |     | NULL    |       |
+| contact | varchar(10) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+ table data;
+mysql> select*from person3;
++---------+------+------------+
+| name    | age  | contact    |
++---------+------+------------+
+| Ritu    |   20 | 9817229673 |
+| Rani    |   20 | 9817229673 |
+| Rudhra  |   20 | 9053423907 |
+| krishna |   20 | 7015821712 |
+| Ramesh  |   20 | 9813127366 |
++---------+------+------------+
+5 rows in set (0.00 sec)
+drop table;
+mysql> drop table person2;                            table delete
+Query OK, 0 rows affected (0.02 sec)
+database show ;
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mydb1              |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+7 rows in set (0.00 sec)
+use primary key;
+mysql>  CREATE TABLE employee_table1(      id int NOT NULL AUTO_INCREMENT,      name varchar(45) NOT NULL,      occupation varchar(35) NOT NULL,      age int NOT NULL,      PRIMARY KEY (id)  );
+Query OK, 0 rows affected (0.03 sec)
+mysql> desc employee_table1;
++------------+-------------+------+-----+---------+----------------+
+| Field      | Type        | Null | Key | Default | Extra          |
++------------+-------------+------+-----+---------+----------------+
+| id         | int         | NO   | PRI | NULL    | auto_increment |
+| name       | varchar(45) | NO   |     | NULL    |                |
+| occupation | varchar(35) | NO   |     | NULL    |                |
+| age        | int         | NO   |     | NULL    |                |
++------------+-------------+------+-----+---------+----------------+
+4 rows in set (0.02 sec)
+column name change;
+mysql> alter table student change column name fname varchar(50) not null;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+column add karne ke liye;
+mysql> alter table employee_table1 add lname varchar(30) not null after fname;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+table name change ke liye;
+mysql> alter table employee_table1 rename to employee;
+Query OK, 0 rows affected (0.02 sec)
+value unique karne ke liye;
+mysql> alter table  studentr modify studentcontact varchar(10) unique;
+Query OK, 0 rows affected (0.09 sec)
+Records: 0  Duplicates: 0  Warnings: 0

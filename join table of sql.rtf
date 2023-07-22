@@ -1,0 +1,1341 @@
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+{\colortbl ;\red0\green0\blue255;}
+{\*\generator Riched20 10.0.22000}\viewkind4\uc1 
+\pard\sa200\sl276\slmult1\f0\fs22\lang9 Microsoft Windows [Version 10.0.22000.978]\par
+(c) Microsoft Corporation. All rights reserved.\par
+\par
+C:\\Users\\admin>mysql -u root -p\par
+Enter password: ****\par
+Welcome to the MySQL monitor.  Commands end with ; or \\g.\par
+Your MySQL connection id is 8\par
+Server version: 8.0.30 MySQL Community Server - GPL\par
+\par
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.\par
+\par
+Oracle is a registered trademark of Oracle Corporation and/or its\par
+affiliates. Other names may be trademarks of their respective\par
+owners.\par
+\par
+Type 'help;' or '\\h' for help. Type '\\c' to clear the current input statement.\par
+\par
+mysql> use ritu;\par
+Database changed\par
+mysql> desc department;\par
++-------+-------------+------+-----+---------+-------+\par
+| Field | Type        | Null | Key | Default | Extra |\par
++-------+-------------+------+-----+---------+-------+\par
+| did   | int         | NO   | PRI | NULL    |       |\par
+| dname | varchar(50) | NO   | UNI | NULL    |       |\par
+| dtask | text        | YES  |     | NULL    |       |\par
++-------+-------------+------+-----+---------+-------+\par
+3 rows in set (0.02 sec)\par
+\par
+mysql> desc employee;\par
++--------+-------------+------+-----+---------+----------------+\par
+| Field  | Type        | Null | Key | Default | Extra          |\par
++--------+-------------+------+-----+---------+----------------+\par
+| eid    | int         | NO   | PRI | NULL    | auto_increment |\par
+| ename  | varchar(30) | YES  |     | NULL    |                |\par
+| DOJ    | date        | YES  |     | NULL    |                |\par
+| salary | bigint      | YES  |     | NULL    |                |\par
+| deptid | int         | YES  | MUL | NULL    |                |\par
++--------+-------------+------+-----+---------+----------------+\par
+5 rows in set (0.00 sec)\par
+\par
+mysql> select dname ,did from department inner join employee where did=deptid;\par
++-----------+-----+\par
+| dname     | did |\par
++-----------+-----+\par
+| admin     | 100 |\par
+| operation | 101 |\par
+| operation | 101 |\par
+| operation | 101 |\par
+| operation | 101 |\par
+| service   | 102 |\par
+| Traning   | 201 |\par
+| Traning   | 201 |\par
+| Traning   | 201 |\par
+| Traning   | 201 |\par
++-----------+-----+\par
+10 rows in set (0.03 sec)\par
+\par
+mysql> select distinct deptid from employee;\par
++--------+\par
+| deptid |\par
++--------+\par
+|    100 |\par
+|    101 |\par
+|    102 |\par
+|    201 |\par
++--------+\par
+4 rows in set (0.01 sec)\par
+\par
+mysql> create table fruits(id int primary key,name varchar(30));\par
+Query OK, 0 rows affected (0.08 sec)\par
+\par
+mysql> create table users(uid int primary key,name varchar(50), fid int ,foreign key(fid)references fruits(id));\par
+Query OK, 0 rows affected (0.04 sec)\par
+\par
+mysql> insert into fruits values(1,'apple'),(2,'mango'),(3,'guava'),(4,'pear'),(5,'banana');\par
+Query OK, 5 rows affected (0.01 sec)\par
+Records: 5  Duplicates: 0  Warnings: 0\par
+\par
+mysql> insert into users values(10,'a',4),(11,'b',5),(12,'c',4);\par
+Query OK, 3 rows affected (0.01 sec)\par
+Records: 3  Duplicates: 0  Warnings: 0\par
+\par
+mysql> select distinct fid  from users inner join fruits on fid=id;\par
++------+\par
+| fid  |\par
++------+\par
+|    4 |\par
+|    5 |\par
++------+\par
+2 rows in set (0.01 sec)\par
+\par
+mysql>  select fruits.name from fruits  inner join users on id=fid;\par
++--------+\par
+| name   |\par
++--------+\par
+| pear   |\par
+| pear   |\par
+| banana |\par
++--------+\par
+3 rows in set (0.00 sec)\par
+\par
+mysql> select * from fruits left join users on id=fid;\par
++----+--------+------+------+------+\par
+| id | name   | uid  | name | fid  |\par
++----+--------+------+------+------+\par
+|  1 | apple  | NULL | NULL | NULL |\par
+|  2 | mango  | NULL | NULL | NULL |\par
+|  3 | guava  | NULL | NULL | NULL |\par
+|  4 | pear   |   10 | a    |    4 |\par
+|  4 | pear   |   12 | c    |    4 |\par
+|  5 | banana |   11 | b    |    5 |\par
++----+--------+------+------+------+\par
+6 rows in set (0.00 sec)\par
+\par
+mysql> desc fruits;\par
++-------+-------------+------+-----+---------+-------+\par
+| Field | Type        | Null | Key | Default | Extra |\par
++-------+-------------+------+-----+---------+-------+\par
+| id    | int         | NO   | PRI | NULL    |       |\par
+| name  | varchar(30) | YES  |     | NULL    |       |\par
++-------+-------------+------+-----+---------+-------+\par
+2 rows in set (0.01 sec)\par
+\par
+mysql> desc users;\par
++-------+-------------+------+-----+---------+-------+\par
+| Field | Type        | Null | Key | Default | Extra |\par
++-------+-------------+------+-----+---------+-------+\par
+| uid   | int         | NO   | PRI | NULL    |       |\par
+| name  | varchar(50) | YES  |     | NULL    |       |\par
+| fid   | int         | YES  | MUL | NULL    |       |\par
++-------+-------------+------+-----+---------+-------+\par
+3 rows in set (0.01 sec)\par
+\par
+mysql> select * from users;\par
++-----+------+------+\par
+| uid | name | fid  |\par
++-----+------+------+\par
+|  10 | a    |    4 |\par
+|  11 | b    |    5 |\par
+|  12 | c    |    4 |\par
++-----+------+------+\par
+3 rows in set (0.00 sec)\par
+\par
+mysql> select * from fruits;\par
++----+--------+\par
+| id | name   |\par
++----+--------+\par
+|  1 | apple  |\par
+|  2 | mango  |\par
+|  3 | guava  |\par
+|  4 | pear   |\par
+|  5 | banana |\par
++----+--------+\par
+5 rows in set (0.00 sec)\par
+\par
+mysql> insert into users values(16,'d',null);\par
+Query OK, 1 row affected (0.01 sec)\par
+\par
+mysql> select * from users;\par
++-----+------+------+\par
+| uid | name | fid  |\par
++-----+------+------+\par
+|  10 | a    |    4 |\par
+|  11 | b    |    5 |\par
+|  12 | c    |    4 |\par
+|  16 | d    | NULL |\par
++-----+------+------+\par
+4 rows in set (0.00 sec)\par
+\par
+mysql> insert into users values(15,'e',null);\par
+Query OK, 1 row affected (0.00 sec)\par
+\par
+mysql> select * from fruits left join users on id=fid;\par
++----+--------+------+------+------+\par
+| id | name   | uid  | name | fid  |\par
++----+--------+------+------+------+\par
+|  1 | apple  | NULL | NULL | NULL |\par
+|  2 | mango  | NULL | NULL | NULL |\par
+|  3 | guava  | NULL | NULL | NULL |\par
+|  4 | pear   |   10 | a    |    4 |\par
+|  4 | pear   |   12 | c    |    4 |\par
+|  5 | banana |   11 | b    |    5 |\par
++----+--------+------+------+------+\par
+6 rows in set (0.00 sec)\par
+\par
+mysql> select * from users left  join fruits on id=fid;\par
++-----+------+------+------+--------+\par
+| uid | name | fid  | id   | name   |\par
++-----+------+------+------+--------+\par
+|  10 | a    |    4 |    4 | pear   |\par
+|  11 | b    |    5 |    5 | banana |\par
+|  12 | c    |    4 |    4 | pear   |\par
+|  15 | e    | NULL | NULL | NULL   |\par
+|  16 | d    | NULL | NULL | NULL   |\par
++-----+------+------+------+--------+\par
+5 rows in set (0.01 sec)\par
+\par
+mysql> select * from users right  join fruits on id=fid;\par
++------+------+------+----+--------+\par
+| uid  | name | fid  | id | name   |\par
++------+------+------+----+--------+\par
+| NULL | NULL | NULL |  1 | apple  |\par
+| NULL | NULL | NULL |  2 | mango  |\par
+| NULL | NULL | NULL |  3 | guava  |\par
+|   10 | a    |    4 |  4 | pear   |\par
+|   12 | c    |    4 |  4 | pear   |\par
+|   11 | b    |    5 |  5 | banana |\par
++------+------+------+----+--------+\par
+6 rows in set (0.00 sec)\par
+\par
+mysql> select * from fruits right  join users on id=fid;\par
++------+--------+-----+------+------+\par
+| id   | name   | uid | name | fid  |\par
++------+--------+-----+------+------+\par
+|    4 | pear   |  10 | a    |    4 |\par
+|    5 | banana |  11 | b    |    5 |\par
+|    4 | pear   |  12 | c    |    4 |\par
+| NULL | NULL   |  15 | e    | NULL |\par
+| NULL | NULL   |  16 | d    | NULL |\par
++------+--------+-----+------+------+\par
+5 rows in set (0.00 sec)\par
+mysql> select * from fruits cross join users;\par
++----+--------+-----+------+------+\par
+| id | name   | uid | name | fid  |\par
++----+--------+-----+------+------+\par
+|  5 | banana |  10 | a    |    4 |\par
+|  4 | pear   |  10 | a    |    4 |\par
+|  3 | guava  |  10 | a    |    4 |\par
+|  2 | mango  |  10 | a    |    4 |\par
+|  1 | apple  |  10 | a    |    4 |\par
+|  5 | banana |  11 | b    |    5 |\par
+|  4 | pear   |  11 | b    |    5 |\par
+|  3 | guava  |  11 | b    |    5 |\par
+|  2 | mango  |  11 | b    |    5 |\par
+|  1 | apple  |  11 | b    |    5 |\par
+|  5 | banana |  12 | c    |    4 |\par
+|  4 | pear   |  12 | c    |    4 |\par
+|  3 | guava  |  12 | c    |    4 |\par
+|  2 | mango  |  12 | c    |    4 |\par
+|  1 | apple  |  12 | c    |    4 |\par
+|  5 | banana |  15 | e    | NULL |\par
+|  4 | pear   |  15 | e    | NULL |\par
+|  3 | guava  |  15 | e    | NULL |\par
+|  2 | mango  |  15 | e    | NULL |\par
+|  1 | apple  |  15 | e    | NULL |\par
+|  5 | banana |  16 | d    | NULL |\par
+|  4 | pear   |  16 | d    | NULL |\par
+|  3 | guava  |  16 | d    | NULL |\par
+|  2 | mango  |  16 | d    | NULL |\par
+|  1 | apple  |  16 | d    | NULL |\par
++----+--------+-----+------+------+\par
+25 rows in set (0.01 sec)\par
+\par
+mysql> select * from users cross join fruits;\par
++-----+------+------+----+--------+\par
+| uid | name | fid  | id | name   |\par
++-----+------+------+----+--------+\par
+|  16 | d    | NULL |  1 | apple  |\par
+|  15 | e    | NULL |  1 | apple  |\par
+|  12 | c    |    4 |  1 | apple  |\par
+|  11 | b    |    5 |  1 | apple  |\par
+|  10 | a    |    4 |  1 | apple  |\par
+|  16 | d    | NULL |  2 | mango  |\par
+|  15 | e    | NULL |  2 | mango  |\par
+|  12 | c    |    4 |  2 | mango  |\par
+|  11 | b    |    5 |  2 | mango  |\par
+|  10 | a    |    4 |  2 | mango  |\par
+|  16 | d    | NULL |  3 | guava  |\par
+|  15 | e    | NULL |  3 | guava  |\par
+|  12 | c    |    4 |  3 | guava  |\par
+|  11 | b    |    5 |  3 | guava  |\par
+|  10 | a    |    4 |  3 | guava  |\par
+|  16 | d    | NULL |  4 | pear   |\par
+|  15 | e    | NULL |  4 | pear   |\par
+|  12 | c    |    4 |  4 | pear   |\par
+|  11 | b    |    5 |  4 | pear   |\par
+|  10 | a    |    4 |  4 | pear   |\par
+|  16 | d    | NULL |  5 | banana |\par
+|  15 | e    | NULL |  5 | banana |\par
+|  12 | c    |    4 |  5 | banana |\par
+|  11 | b    |    5 |  5 | banana |\par
+|  10 | a    |    4 |  5 | banana |\par
++-----+------+------+----+--------+\par
+25 rows in set (0.00 sec)\par
+\par
+mysql> create table emp(id int primary key,name varchar(50),supervisourID int);\par
+Query OK, 0 rows affected (0.04 sec)\par
+\par
+mysql> insert into emp values(1,'shiva',3),(2,'krishna',1),(3,'rama',1);\par
+Query OK, 3 rows affected (0.01 sec)\par
+Records: 3  Duplicates: 0  Warnings: 0\par
+\par
+mysql> select * from emp;\par
++----+---------+---------------+\par
+| id | name    | supervisourID |\par
++----+---------+---------------+\par
+|  1 | shiva   |             3 |\par
+|  2 | krishna |             1 |\par
+|  3 | rama    |             1 |\par
++----+---------+---------------+\par
+3 rows in set (0.00 sec)\par
+\par
+mysql> select e1.name as employee  , e2.name as supervisour from emp e1,emp e2 where e1.supervisourID=e2.id;\par
++----------+-------------+\par
+| employee | supervisour |\par
++----------+-------------+\par
+| shiva    | rama        |\par
+| krishna  | shiva       |\par
+| rama     | shiva       |\par
++----------+-------------+\par
+3 rows in set (0.00 sec)\par
+\par
+mysql> insert into emp values(4,'brahma',null);\par
+Query OK, 1 row affected (0.01 sec)\par
+\par
+mysql> update emp set supervisourID=4 where id=3;\par
+Query OK, 1 row affected (0.01 sec)\par
+Rows matched: 1  Changed: 1  Warnings: 0\par
+\par
+mysql> select * from emp;\par
++----+---------+---------------+\par
+| id | name    | supervisourID |\par
++----+---------+---------------+\par
+|  1 | shiva   |             3 |\par
+|  2 | krishna |             1 |\par
+|  3 | rama    |             4 |\par
+|  4 | brahma  |          NULL |\par
++----+---------+---------------+\par
+4 rows in set (0.00 sec)\par
+\par
+mysql> update emp set supervisourID=4 where id=2;\par
+Query OK, 1 row affected (0.01 sec)\par
+Rows matched: 1  Changed: 1  Warnings: 0\par
+\par
+mysql> select * from emp;\par
++----+---------+---------------+\par
+| id | name    | supervisourID |\par
++----+---------+---------------+\par
+|  1 | shiva   |             3 |\par
+|  2 | krishna |             4 |\par
+|  3 | rama    |             4 |\par
+|  4 | brahma  |          NULL |\par
++----+---------+---------------+\par
+4 rows in set (0.00 sec)\par
+\par
+mysql> update emp set supervisourID=4 where id=3;\par
+Query OK, 0 rows affected (0.00 sec)\par
+Rows matched: 1  Changed: 0  Warnings: 0\par
+\par
+mysql> select * from emp;\par
++----+---------+---------------+\par
+| id | name    | supervisourID |\par
++----+---------+---------------+\par
+|  1 | shiva   |             3 |\par
+|  2 | krishna |             4 |\par
+|  3 | rama    |             4 |\par
+|  4 | brahma  |          NULL |\par
++----+---------+---------------+\par
+4 rows in set (0.00 sec)\par
+\par
+mysql> update emp set supervisourID=3 where id=2;\par
+Query OK, 1 row affected (0.01 sec)\par
+Rows matched: 1  Changed: 1  Warnings: 0\par
+\par
+mysql> select * from emp;\par
++----+---------+---------------+\par
+| id | name    | supervisourID |\par
++----+---------+---------------+\par
+|  1 | shiva   |             3 |\par
+|  2 | krishna |             3 |\par
+|  3 | rama    |             4 |\par
+|  4 | brahma  |          NULL |\par
++----+---------+---------------+\par
+4 rows in set (0.00 sec)\par
+\par
+mysql> update emp set supervisourID=4 where id=2;\par
+Query OK, 1 row affected (0.01 sec)\par
+Rows matched: 1  Changed: 1  Warnings: 0\par
+\par
+mysql> select * from emp;\par
++----+---------+---------------+\par
+| id | name    | supervisourID |\par
++----+---------+---------------+\par
+|  1 | shiva   |             3 |\par
+|  2 | krishna |             4 |\par
+|  3 | rama    |             4 |\par
+|  4 | brahma  |          NULL |\par
++----+---------+---------------+\par
+4 rows in set (0.00 sec)\par
+\par
+mysql> update emp set supervisourID=4 where id=2;\par
+Query OK, 0 rows affected (0.00 sec)\par
+Rows matched: 1  Changed: 0  Warnings: 0\par
+\par
+mysql> select * from emp;\par
++----+---------+---------------+\par
+| id | name    | supervisourID |\par
++----+---------+---------------+\par
+|  1 | shiva   |             3 |\par
+|  2 | krishna |             4 |\par
+|  3 | rama    |             4 |\par
+|  4 | brahma  |          NULL |\par
++----+---------+---------------+\par
+4 rows in set (0.00 sec)\par
+\par
+mysql> update emp set supervisourID=3 where id=2;\par
+Query OK, 1 row affected (0.01 sec)\par
+Rows matched: 1  Changed: 1  Warnings: 0\par
+\par
+mysql> select * from emp;\par
++----+---------+---------------+\par
+| id | name    | supervisourID |\par
++----+---------+---------------+\par
+|  1 | shiva   |             3 |\par
+|  2 | krishna |             3 |\par
+|  3 | rama    |             4 |\par
+|  4 | brahma  |          NULL |\par
++----+---------+---------------+\par
+4 rows in set (0.00 sec)\par
+\par
+mysql> select e1.name as employee  , e2.name as supervisour from emp e1,emp e2 where e1.supervisourID=e2.id;\par
++----------+-------------+\par
+| employee | supervisour |\par
++----------+-------------+\par
+| shiva    | rama        |\par
+| krishna  | rama        |\par
+| rama     | brahma      |\par
++----------+-------------+\par
+3 rows in set (0.00 sec)\par
+\par
+mysql> update emp set supervisourID=3 where id=1;\par
+Query OK, 0 rows affected (0.00 sec)\par
+Rows matched: 1  Changed: 0  Warnings: 0\par
+\par
+mysql> select * from emp;\par
++----+---------+---------------+\par
+| id | name    | supervisourID |\par
++----+---------+---------------+\par
+|  1 | shiva   |             3 |\par
+|  2 | krishna |             3 |\par
+|  3 | rama    |             4 |\par
+|  4 | brahma  |          NULL |\par
++----+---------+---------------+\par
+4 rows in set (0.00 sec)\par
+\par
+mysql> insert into emp values(5,'vishnu',2);\par
+Query OK, 1 row affected (0.00 sec)\par
+\par
+mysql> select * from emp;\par
++----+---------+---------------+\par
+| id | name    | supervisourID |\par
++----+---------+---------------+\par
+|  1 | shiva   |             3 |\par
+|  2 | krishna |             3 |\par
+|  3 | rama    |             4 |\par
+|  4 | brahma  |          NULL |\par
+|  5 | vishnu  |             2 |\par
++----+---------+---------------+\par
+5 rows in set (0.00 sec)\par
+\par
+mysql> select e1.name as employee  , e2.name as supervisour from emp e1,emp e2 where e1.supervisourID=e2.id;\par
++----------+-------------+\par
+| employee | supervisour |\par
++----------+-------------+\par
+| shiva    | rama        |\par
+| krishna  | rama        |\par
+| rama     | brahma      |\par
+| vishnu   | krishna     |\par
++----------+-------------+\par
+4 rows in set (0.00 sec)\par
+\par
+mysql> select name from emp where id=supervisourID;\par
+Empty set (0.00 sec)\par
+\par
+mysql> set autocommit=0;\par
+Query OK, 0 rows affected (0.01 sec)\par
+\par
+mysql> start transaction;\par
+Query OK, 0 rows affected (0.00 sec)\par
+\par
+mysql> insert into fruits values(7,'grapes');\par
+Query OK, 1 row affected (0.00 sec)\par
+\par
+mysql> select * from fruits;\par
++----+--------+\par
+| id | name   |\par
++----+--------+\par
+|  1 | apple  |\par
+|  2 | mango  |\par
+|  3 | guava  |\par
+|  4 | pear   |\par
+|  5 | banana |\par
+|  7 | grapes |\par
++----+--------+\par
+6 rows in set (0.00 sec)\par
+\par
+mysql> rollback;\par
+Query OK, 0 rows affected (0.00 sec)\par
+\par
+mysql> select * from fruits;\par
++----+--------+\par
+| id | name   |\par
++----+--------+\par
+|  1 | apple  |\par
+|  2 | mango  |\par
+|  3 | guava  |\par
+|  4 | pear   |\par
+|  5 | banana |\par
++----+--------+\par
+5 rows in set (0.00 sec)\par
+\par
+mysql> insert into fruits values(6,'grapes');\par
+Query OK, 1 row affected (0.00 sec)\par
+\par
+mysql> insert into fruits values(7,'kiwi');\par
+Query OK, 1 row affected (0.00 sec)\par
+\par
+mysql> insert into fruits values(8,'orange');\par
+Query OK, 1 row affected (0.00 sec)\par
+\par
+mysql> select * from fruits;\par
++----+--------+\par
+| id | name   |\par
++----+--------+\par
+|  1 | apple  |\par
+|  2 | mango  |\par
+|  3 | guava  |\par
+|  4 | pear   |\par
+|  5 | banana |\par
+|  6 | grapes |\par
+|  7 | kiwi   |\par
+|  8 | orange |\par
++----+--------+\par
+8 rows in set (0.00 sec)\par
+\par
+mysql> rollback;\par
+Query OK, 0 rows affected (0.00 sec)\par
+\par
+mysql> select * from fruits;\par
++----+--------+\par
+| id | name   |\par
++----+--------+\par
+|  1 | apple  |\par
+|  2 | mango  |\par
+|  3 | guava  |\par
+|  4 | pear   |\par
+|  5 | banana |\par
++----+--------+\par
+5 rows in set (0.00 sec)\par
+\par
+mysql> commit;\par
+Query OK, 0 rows affected (0.00 sec)\par
+\par
+mysql> insert into fruits values(6,'grapes');\par
+Query OK, 1 row affected (0.01 sec)\par
+\par
+mysql> insert into fruits values(7,'kiwi');\par
+Query OK, 1 row affected (0.00 sec)\par
+\par
+mysql> insert into fruits values(8,'orange');\par
+Query OK, 1 row affected (0.00 sec)\par
+\par
+mysql> select * from fruits;\par
++----+--------+\par
+| id | name   |\par
++----+--------+\par
+|  1 | apple  |\par
+|  2 | mango  |\par
+|  3 | guava  |\par
+|  4 | pear   |\par
+|  5 | banana |\par
+|  6 | grapes |\par
+|  7 | kiwi   |\par
+|  8 | orange |\par
++----+--------+\par
+8 rows in set (0.00 sec)\par
+\par
+mysql> set autocommit=1;\par
+Query OK, 0 rows affected (0.00 sec)\par
+\par
+mysql> insert into fruits values(9,'papaya');\par
+Query OK, 1 row affected (0.01 sec)\par
+\par
+mysql> select * from fruits;\par
++----+--------+\par
+| id | name   |\par
++----+--------+\par
+|  1 | apple  |\par
+|  2 | mango  |\par
+|  3 | guava  |\par
+|  4 | pear   |\par
+|  5 | banana |\par
+|  6 | grapes |\par
+|  7 | kiwi   |\par
+|  8 | orange |\par
+|  9 | papaya |\par
++----+--------+\par
+9 rows in set (0.00 sec)\par
+\par
+mysql> rollback;\par
+Query OK, 0 rows affected (0.00 sec)\par
+\par
+mysql> select * from fruits;\par
++----+--------+\par
+| id | name   |\par
++----+--------+\par
+|  1 | apple  |\par
+|  2 | mango  |\par
+|  3 | guava  |\par
+|  4 | pear   |\par
+|  5 | banana |\par
+|  6 | grapes |\par
+|  7 | kiwi   |\par
+|  8 | orange |\par
+|  9 | papaya |\par
++----+--------+\par
+9 rows in set (0.00 sec)\par
+\par
+mysql> select@@port;\par
++--------+\par
+| @@port |\par
++--------+\par
+|   3306 |\par
++--------+\par
+1 row in set (0.00 sec)\par
+\par
+mysql> use mydb1;\par
+Database changed\par
+mysql> select@@port;\par
++--------+\par
+| @@port |\par
++--------+\par
+|   3306 |\par
++--------+\par
+1 row in set (0.00 sec)\par
+\par
+mysql> use ritu;\par
+Database changed\par
+mysql> show tables;\par
++----------------+\par
+| Tables_in_ritu |\par
++----------------+\par
+| book           |\par
+| days           |\par
+| department     |\par
+| emp            |\par
+| employee       |\par
+| fruits         |\par
+| lib            |\par
+| library        |\par
+| shirt          |\par
+| student        |\par
+| student1       |\par
+| studentt       |\par
+| users          |\par
++----------------+\par
+13 rows in set (0.02 sec)\par
+\par
+mysql>\par
+..............................................................................................................................\par
+Microsoft Windows [Version 10.0.22000.978]\par
+(c) Microsoft Corporation. All rights reserved.\par
+\par
+C:\\Users\\admin>mysql -u root -p\par
+Enter password: ****\par
+Welcome to the MySQL monitor.  Commands end with ; or \\g.\par
+Your MySQL connection id is 8\par
+Server version: 8.0.30 MySQL Community Server - GPL\par
+\par
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.\par
+\par
+Oracle is a registered trademark of Oracle Corporation and/or its\par
+affiliates. Other names may be trademarks of their respective\par
+owners.\par
+\par
+Type 'help;' or '\\h' for help. Type '\\c' to clear the current input statement.\par
+\par
+mysql> use ritu;\par
+Database changed\par
+mysql> desc department;\par
++-------+-------------+------+-----+---------+-------+\par
+| Field | Type        | Null | Key | Default | Extra |\par
++-------+-------------+------+-----+---------+-------+\par
+| did   | int         | NO   | PRI | NULL    |       |\par
+| dname | varchar(50) | NO   | UNI | NULL    |       |\par
+| dtask | text        | YES  |     | NULL    |       |\par
++-------+-------------+------+-----+---------+-------+\par
+3 rows in set (0.02 sec)\par
+\par
+mysql> desc employee;\par
++--------+-------------+------+-----+---------+----------------+\par
+| Field  | Type        | Null | Key | Default | Extra          |\par
++--------+-------------+------+-----+---------+----------------+\par
+| eid    | int         | NO   | PRI | NULL    | auto_increment |\par
+| ename  | varchar(30) | YES  |     | NULL    |                |\par
+| DOJ    | date        | YES  |     | NULL    |                |\par
+| salary | bigint      | YES  |     | NULL    |                |\par
+| deptid | int         | YES  | MUL | NULL    |                |\par
++--------+-------------+------+-----+---------+----------------+\par
+5 rows in set (0.00 sec)\par
+\par
+mysql> select dname ,did from department inner join employee where did=deptid;\par
++-----------+-----+\par
+| dname     | did |\par
++-----------+-----+\par
+| admin     | 100 |\par
+| operation | 101 |\par
+| operation | 101 |\par
+| operation | 101 |\par
+| operation | 101 |\par
+| service   | 102 |\par
+| Traning   | 201 |\par
+| Traning   | 201 |\par
+| Traning   | 201 |\par
+| Traning   | 201 |\par
++-----------+-----+\par
+10 rows in set (0.03 sec)\par
+\par
+mysql> select distinct deptid from employee;\par
++--------+\par
+| deptid |\par
++--------+\par
+|    100 |\par
+|    101 |\par
+|    102 |\par
+|    201 |\par
++--------+\par
+4 rows in set (0.01 sec)\par
+\par
+mysql> create table fruits(id int primary key,name varchar(30));\par
+Query OK, 0 rows affected (0.08 sec)\par
+\par
+mysql> create table users(uid int primary key,name varchar(50), fid int ,foreign key(fid)references fruits(id));\par
+Query OK, 0 rows affected (0.04 sec)\par
+\par
+mysql> insert into fruits values(1,'apple'),(2,'mango'),(3,'guava'),(4,'pear'),(5,'banana');\par
+Query OK, 5 rows affected (0.01 sec)\par
+Records: 5  Duplicates: 0  Warnings: 0\par
+mysql> insert into users values(10,'a',4),(11,'b',5),(12,'c',4);\par
+Query OK, 3 rows affected (0.01 sec)\par
+Records: 3  Duplicates: 0  Warnings: 0\par
+mysql> select distinct fid  from users inner join fruits on fid=id;\par
++------+\par
+| fid  |\par
++------+\par
+|    4 |\par
+|    5 |\par
++------+\par
+2 rows in set (0.01 sec)\par
+\par
+\par
+mysql> select fruits.name from fruits  inner join users on id=fid;\par
++--------+\par
+| name   |\par
++--------+\par
+| pear   |\par
+| pear   |\par
+| banana |\par
++--------+\par
+3 rows in set (0.00 sec)\par
+\par
+mysql> select * from fruits left join users on id=fid;\par
++----+--------+------+------+------+\par
+| id | name   | uid  | name | fid  |\par
++----+--------+------+------+------+\par
+|  1 | apple  | NULL | NULL | NULL |\par
+|  2 | mango  | NULL | NULL | NULL |\par
+|  3 | guava  | NULL | NULL | NULL |\par
+|  4 | pear   |   10 | a    |    4 |\par
+|  4 | pear   |   12 | c    |    4 |\par
+|  5 | banana |   11 | b    |    5 |\par
++----+--------+------+------+------+\par
+6 rows in set (0.00 sec)\par
+\par
+mysql> desc fruits;\par
++-------+-------------+------+-----+---------+-------+\par
+| Field | Type        | Null | Key | Default | Extra |\par
++-------+-------------+------+-----+---------+-------+\par
+| id    | int         | NO   | PRI | NULL    |       |\par
+| name  | varchar(30) | YES  |     | NULL    |       |\par
++-------+-------------+------+-----+---------+-------+\par
+2 rows in set (0.01 sec)\par
+\par
+mysql> desc users;\par
++-------+-------------+------+-----+---------+-------+\par
+| Field | Type        | Null | Key | Default | Extra |\par
++-------+-------------+------+-----+---------+-------+\par
+| uid   | int         | NO   | PRI | NULL    |       |\par
+| name  | varchar(50) | YES  |     | NULL    |       |\par
+| fid   | int         | YES  | MUL | NULL    |       |\par
++-------+-------------+------+-----+---------+-------+\par
+3 rows in set (0.01 sec)\par
+\par
+mysql> select * from users;\par
++-----+------+------+\par
+| uid | name | fid  |\par
++-----+------+------+\par
+|  10 | a    |    4 |\par
+|  11 | b    |    5 |\par
+|  12 | c    |    4 |\par
++-----+------+------+\par
+3 rows in set (0.00 sec)\par
+\par
+mysql> select * from fruits;\par
++----+--------+\par
+| id | name   |\par
++----+--------+\par
+|  1 | apple  |\par
+|  2 | mango  |\par
+|  3 | guava  |\par
+|  4 | pear   |\par
+|  5 | banana |\par
++----+--------+\par
+5 rows in set (0.00 sec)\par
+\par
+mysql> insert into users values(16,'d',null);\par
+Query OK, 1 row affected (0.01 sec)\par
+\par
+mysql> select * from users;\par
++-----+------+------+\par
+| uid | name | fid  |\par
++-----+------+------+\par
+|  10 | a    |    4 |\par
+|  11 | b    |    5 |\par
+|  12 | c    |    4 |\par
+|  16 | d    | NULL |\par
++-----+------+------+\par
+4 rows in set (0.00 sec)\par
+\par
+mysql> insert into users values(15,'e',null);\par
+Query OK, 1 row affected (0.00 sec)\par
+\par
+mysql> select * from fruits left join users on id=fid;\par
++----+--------+------+------+------+\par
+| id | name   | uid  | name | fid  |\par
++----+--------+------+------+------+\par
+|  1 | apple  | NULL | NULL | NULL |\par
+|  2 | mango  | NULL | NULL | NULL |\par
+|  3 | guava  | NULL | NULL | NULL |\par
+|  4 | pear   |   10 | a    |    4 |\par
+|  4 | pear   |   12 | c    |    4 |\par
+|  5 | banana |   11 | b    |    5 |\par
++----+--------+------+------+------+\par
+6 rows in set (0.00 sec)\par
+\par
+mysql> select * from users left  join fruits on id=fid;\par
++-----+------+------+------+--------+\par
+| uid | name | fid  | id   | name   |\par
++-----+------+------+------+--------+\par
+|  10 | a    |    4 |    4 | pear   |\par
+|  11 | b    |    5 |    5 | banana |\par
+|  12 | c    |    4 |    4 | pear   |\par
+|  15 | e    | NULL | NULL | NULL   |\par
+|  16 | d    | NULL | NULL | NULL   |\par
++-----+------+------+------+--------+\par
+5 rows in set (0.01 sec)\par
+\par
+mysql> select * from users right  join fruits on id=fid;\par
++------+------+------+----+--------+\par
+| uid  | name | fid  | id | name   |\par
++------+------+------+----+--------+\par
+| NULL | NULL | NULL |  1 | apple  |\par
+| NULL | NULL | NULL |  2 | mango  |\par
+| NULL | NULL | NULL |  3 | guava  |\par
+|   10 | a    |    4 |  4 | pear   |\par
+|   12 | c    |    4 |  4 | pear   |\par
+|   11 | b    |    5 |  5 | banana |\par
++------+------+------+----+--------+\par
+6 rows in set (0.00 sec)\par
+\par
+mysql> select * from fruits right  join users on id=fid;\par
++------+--------+-----+------+------+\par
+| id   | name   | uid | name | fid  |\par
++------+--------+-----+------+------+\par
+|    4 | pear   |  10 | a    |    4 |\par
+|    5 | banana |  11 | b    |    5 |\par
+|    4 | pear   |  12 | c    |    4 |\par
+| NULL | NULL   |  15 | e    | NULL |\par
+| NULL | NULL   |  16 | d    | NULL |\par
++------+--------+-----+------+------+\par
+5 rows in set (0.00 sec)\par
+\par
+mysql> To join the video meeting, click this link: {{\field{\*\fldinst{HYPERLINK https://meet.google.com/mmg-wkjc-egs }}{\fldrslt{https://meet.google.com/mmg-wkjc-egs\ul0\cf0}}}}\f0\fs22\par
+    -> Otherwise, to join by phone, dial +1 256-733-1244 and enter this PIN: 913 633 588#\par
+    -> ^C\par
+mysql> select * from fruits cross join users;\par
++----+--------+-----+------+------+\par
+| id | name   | uid | name | fid  |\par
++----+--------+-----+------+------+\par
+|  5 | banana |  10 | a    |    4 |\par
+|  4 | pear   |  10 | a    |    4 |\par
+|  3 | guava  |  10 | a    |    4 |\par
+|  2 | mango  |  10 | a    |    4 |\par
+|  1 | apple  |  10 | a    |    4 |\par
+|  5 | banana |  11 | b    |    5 |\par
+|  4 | pear   |  11 | b    |    5 |\par
+|  3 | guava  |  11 | b    |    5 |\par
+|  2 | mango  |  11 | b    |    5 |\par
+|  1 | apple  |  11 | b    |    5 |\par
+|  5 | banana |  12 | c    |    4 |\par
+|  4 | pear   |  12 | c    |    4 |\par
+|  3 | guava  |  12 | c    |    4 |\par
+|  2 | mango  |  12 | c    |    4 |\par
+|  1 | apple  |  12 | c    |    4 |\par
+|  5 | banana |  15 | e    | NULL |\par
+|  4 | pear   |  15 | e    | NULL |\par
+|  3 | guava  |  15 | e    | NULL |\par
+|  2 | mango  |  15 | e    | NULL |\par
+|  1 | apple  |  15 | e    | NULL |\par
+|  5 | banana |  16 | d    | NULL |\par
+|  4 | pear   |  16 | d    | NULL |\par
+|  3 | guava  |  16 | d    | NULL |\par
+|  2 | mango  |  16 | d    | NULL |\par
+|  1 | apple  |  16 | d    | NULL |\par
++----+--------+-----+------+------+\par
+25 rows in set (0.01 sec)\par
+\par
+mysql> select * from users cross join fruits;\par
++-----+------+------+----+--------+\par
+| uid | name | fid  | id | name   |\par
++-----+------+------+----+--------+\par
+|  16 | d    | NULL |  1 | apple  |\par
+|  15 | e    | NULL |  1 | apple  |\par
+|  12 | c    |    4 |  1 | apple  |\par
+|  11 | b    |    5 |  1 | apple  |\par
+|  10 | a    |    4 |  1 | apple  |\par
+|  16 | d    | NULL |  2 | mango  |\par
+|  15 | e    | NULL |  2 | mango  |\par
+|  12 | c    |    4 |  2 | mango  |\par
+|  11 | b    |    5 |  2 | mango  |\par
+|  10 | a    |    4 |  2 | mango  |\par
+|  16 | d    | NULL |  3 | guava  |\par
+|  15 | e    | NULL |  3 | guava  |\par
+|  12 | c    |    4 |  3 | guava  |\par
+|  11 | b    |    5 |  3 | guava  |\par
+|  10 | a    |    4 |  3 | guava  |\par
+|  16 | d    | NULL |  4 | pear   |\par
+|  15 | e    | NULL |  4 | pear   |\par
+|  12 | c    |    4 |  4 | pear   |\par
+|  11 | b    |    5 |  4 | pear   |\par
+|  10 | a    |    4 |  4 | pear   |\par
+|  16 | d    | NULL |  5 | banana |\par
+|  15 | e    | NULL |  5 | banana |\par
+|  12 | c    |    4 |  5 | banana |\par
+|  11 | b    |    5 |  5 | banana |\par
+|  10 | a    |    4 |  5 | banana |\par
++-----+------+------+----+--------+\par
+25 rows in set (0.00 sec)\par
+\par
+mysql> create table emp(id int primary key,name varchar(50),supervisourID int);\par
+Query OK, 0 rows affected (0.04 sec)\par
+\par
+mysql> insert into emp values(1,'shiva',3),(2,'krishna',1),(3,'rama',1);\par
+Query OK, 3 rows affected (0.01 sec)\par
+Records: 3  Duplicates: 0  Warnings: 0\par
+\par
+mysql> select * from emp;\par
++----+---------+---------------+\par
+| id | name    | supervisourID |\par
++----+---------+---------------+\par
+|  1 | shiva   |             3 |\par
+|  2 | krishna |             1 |\par
+|  3 | rama    |             1 |\par
++----+---------+---------------+\par
+3 rows in set (0.00 sec)\par
+\par
+mysql> select e1.name as employee name,e2.name as supervisour name from emp e1,emp e2 where e1.id=e2,supervisourID;\par
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'name,e2.name as supervisour name from emp e1,emp e2 where e1.id=e2,supervisourID' at line 1\par
+mysql> select e1.name as employee name , e2.name as supervisour name from emp e1,emp e2 where e1.supervisourID=e2.id;\par
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'name , e2.name as supervisour name from emp e1,emp e2 where e1.supervisourID=e2.' at line 1\par
+mysql> select e1.name as employee  , e2.name as supervisour from emp e1,emp e2 where e1.supervisourID=e2.id;\par
++----------+-------------+\par
+| employee | supervisour |\par
++----------+-------------+\par
+| shiva    | rama        |\par
+| krishna  | shiva       |\par
+| rama     | shiva       |\par
++----------+-------------+\par
+3 rows in set (0.00 sec)\par
+\par
+mysql> insert into emp values(4,'brahma',null);\par
+Query OK, 1 row affected (0.01 sec)\par
+\par
+mysql> update emp set supervisourID=4 where id=3;\par
+Query OK, 1 row affected (0.01 sec)\par
+Rows matched: 1  Changed: 1  Warnings: 0\par
+\par
+mysql> select * from emp;\par
++----+---------+---------------+\par
+| id | name    | supervisourID |\par
++----+---------+---------------+\par
+|  1 | shiva   |             3 |\par
+|  2 | krishna |             1 |\par
+|  3 | rama    |             4 |\par
+|  4 | brahma  |          NULL |\par
++----+---------+---------------+\par
+4 rows in set (0.00 sec)\par
+\par
+mysql> update emp set supervisourID=4 where id=2;\par
+Query OK, 1 row affected (0.01 sec)\par
+Rows matched: 1  Changed: 1  Warnings: 0\par
+\par
+mysql> select * from emp;\par
++----+---------+---------------+\par
+| id | name    | supervisourID |\par
++----+---------+---------------+\par
+|  1 | shiva   |             3 |\par
+|  2 | krishna |             4 |\par
+|  3 | rama    |             4 |\par
+|  4 | brahma  |          NULL |\par
++----+---------+---------------+\par
+4 rows in set (0.00 sec)\par
+\par
+mysql> update emp set supervisourID=4 where id=3;\par
+Query OK, 0 rows affected (0.00 sec)\par
+Rows matched: 1  Changed: 0  Warnings: 0\par
+\par
+mysql> select * from emp;\par
++----+---------+---------------+\par
+| id | name    | supervisourID |\par
++----+---------+---------------+\par
+|  1 | shiva   |             3 |\par
+|  2 | krishna |             4 |\par
+|  3 | rama    |             4 |\par
+|  4 | brahma  |          NULL |\par
++----+---------+---------------+\par
+4 rows in set (0.00 sec)\par
+\par
+mysql> update emp set id=2 where supervisourID=3;\par
+ERROR 1062 (23000): Duplicate entry '2' for key 'emp.PRIMARY'\par
+mysql> update emp set id=2 where supervisourID=4;\par
+ERROR 1062 (23000): Duplicate entry '2' for key 'emp.PRIMARY'\par
+mysql> update emp set supervisourID=3 where id=2;\par
+Query OK, 1 row affected (0.01 sec)\par
+Rows matched: 1  Changed: 1  Warnings: 0\par
+\par
+mysql> select * from emp;\par
++----+---------+---------------+\par
+| id | name    | supervisourID |\par
++----+---------+---------------+\par
+|  1 | shiva   |             3 |\par
+|  2 | krishna |             3 |\par
+|  3 | rama    |             4 |\par
+|  4 | brahma  |          NULL |\par
++----+---------+---------------+\par
+4 rows in set (0.00 sec)\par
+\par
+mysql> update emp set supervisourID=4 where id=2;\par
+Query OK, 1 row affected (0.01 sec)\par
+Rows matched: 1  Changed: 1  Warnings: 0\par
+\par
+mysql> select * from emp;\par
++----+---------+---------------+\par
+| id | name    | supervisourID |\par
++----+---------+---------------+\par
+|  1 | shiva   |             3 |\par
+|  2 | krishna |             4 |\par
+|  3 | rama    |             4 |\par
+|  4 | brahma  |          NULL |\par
++----+---------+---------------+\par
+4 rows in set (0.00 sec)\par
+\par
+mysql> update emp set supervisourID=4 where id=2;\par
+Query OK, 0 rows affected (0.00 sec)\par
+Rows matched: 1  Changed: 0  Warnings: 0\par
+\par
+mysql> select * from emp;\par
++----+---------+---------------+\par
+| id | name    | supervisourID |\par
++----+---------+---------------+\par
+|  1 | shiva   |             3 |\par
+|  2 | krishna |             4 |\par
+|  3 | rama    |             4 |\par
+|  4 | brahma  |          NULL |\par
++----+---------+---------------+\par
+4 rows in set (0.00 sec)\par
+\par
+mysql> update emp set supervisourID=3 where id=2;\par
+Query OK, 1 row affected (0.01 sec)\par
+Rows matched: 1  Changed: 1  Warnings: 0\par
+\par
+mysql> select * from emp;\par
++----+---------+---------------+\par
+| id | name    | supervisourID |\par
++----+---------+---------------+\par
+|  1 | shiva   |             3 |\par
+|  2 | krishna |             3 |\par
+|  3 | rama    |             4 |\par
+|  4 | brahma  |          NULL |\par
++----+---------+---------------+\par
+4 rows in set (0.00 sec)\par
+\par
+mysql> select e1.name as employee  , e2.name as supervisour from emp e1,emp e2 where e1.supervisourID=e2.id;\par
++----------+-------------+\par
+| employee | supervisour |\par
++----------+-------------+\par
+| shiva    | rama        |\par
+| krishna  | rama        |\par
+| rama     | brahma      |\par
++----------+-------------+\par
+3 rows in set (0.00 sec)\par
+\par
+mysql> update emp set supervisourID=3 where id=1;\par
+Query OK, 0 rows affected (0.00 sec)\par
+Rows matched: 1  Changed: 0  Warnings: 0\par
+\par
+mysql> select * from emp;\par
++----+---------+---------------+\par
+| id | name    | supervisourID |\par
++----+---------+---------------+\par
+|  1 | shiva   |             3 |\par
+|  2 | krishna |             3 |\par
+|  3 | rama    |             4 |\par
+|  4 | brahma  |          NULL |\par
++----+---------+---------------+\par
+4 rows in set (0.00 sec)\par
+\par
+mysql> insert into emp values(5,'vishnu',2);\par
+Query OK, 1 row affected (0.00 sec)\par
+\par
+mysql> select * from emp;\par
++----+---------+---------------+\par
+| id | name    | supervisourID |\par
++----+---------+---------------+\par
+|  1 | shiva   |             3 |\par
+|  2 | krishna |             3 |\par
+|  3 | rama    |             4 |\par
+|  4 | brahma  |          NULL |\par
+|  5 | vishnu  |             2 |\par
++----+---------+---------------+\par
+5 rows in set (0.00 sec)\par
+\par
+mysql> select e1.name as employee  , e2.name as supervisour from emp e1,emp e2 where e1.supervisourID=e2.id;\par
++----------+-------------+\par
+| employee | supervisour |\par
++----------+-------------+\par
+| shiva    | rama        |\par
+| krishna  | rama        |\par
+| rama     | brahma      |\par
+| vishnu   | krishna     |\par
++----------+-------------+\par
+4 rows in set (0.00 sec)\par
+\par
+mysql> select name as employee  , name as supervisour from emp ,emp  where supervisourID=id;\par
+ERROR 1066 (42000): Not unique table/alias: 'emp'\par
+mysql> select name from emp id=supervisourID;\par
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '=supervisourID' at line 1\par
+mysql> select name from emp where id=supervisourID;\par
+Empty set (0.00 sec)\par
+\par
+mysql> set autocommit=0;\par
+Query OK, 0 rows affected (0.01 sec)\par
+\par
+mysql> start transaction;\par
+Query OK, 0 rows affected (0.00 sec)\par
+\par
+mysql> insert into fruits values(7,'grapes');\par
+Query OK, 1 row affected (0.00 sec)\par
+\par
+mysql> select * from fruits;\par
++----+--------+\par
+| id | name   |\par
++----+--------+\par
+|  1 | apple  |\par
+|  2 | mango  |\par
+|  3 | guava  |\par
+|  4 | pear   |\par
+|  5 | banana |\par
+|  7 | grapes |\par
++----+--------+\par
+6 rows in set (0.00 sec)\par
+\par
+mysql> rollback;\par
+Query OK, 0 rows affected (0.00 sec)\par
+\par
+mysql> select * from fruits;\par
++----+--------+\par
+| id | name   |\par
++----+--------+\par
+|  1 | apple  |\par
+|  2 | mango  |\par
+|  3 | guava  |\par
+|  4 | pear   |\par
+|  5 | banana |\par
++----+--------+\par
+5 rows in set (0.00 sec)\par
+\par
+mysql> insert into fruits values(6,'grapes');\par
+Query OK, 1 row affected (0.00 sec)\par
+\par
+mysql> insert into fruits values(7,'kiwi');\par
+Query OK, 1 row affected (0.00 sec)\par
+\par
+mysql> insert into fruits values(8,'orange');\par
+Query OK, 1 row affected (0.00 sec)\par
+\par
+mysql> select * from fruits;\par
++----+--------+\par
+| id | name   |\par
++----+--------+\par
+|  1 | apple  |\par
+|  2 | mango  |\par
+|  3 | guava  |\par
+|  4 | pear   |\par
+|  5 | banana |\par
+|  6 | grapes |\par
+|  7 | kiwi   |\par
+|  8 | orange |\par
++----+--------+\par
+8 rows in set (0.00 sec)\par
+\par
+mysql> rollback;\par
+Query OK, 0 rows affected (0.00 sec)\par
+\par
+mysql> select * from fruits;\par
++----+--------+\par
+| id | name   |\par
++----+--------+\par
+|  1 | apple  |\par
+|  2 | mango  |\par
+|  3 | guava  |\par
+|  4 | pear   |\par
+|  5 | banana |\par
++----+--------+\par
+5 rows in set (0.00 sec)\par
+\par
+mysql> commit;\par
+Query OK, 0 rows affected (0.00 sec)\par
+\par
+mysql> insert into fruits values(6,'grapes');\par
+Query OK, 1 row affected (0.01 sec)\par
+\par
+mysql> insert into fruits values(7,'kiwi');\par
+Query OK, 1 row affected (0.00 sec)\par
+\par
+mysql> insert into fruits values(8,'orange');\par
+Query OK, 1 row affected (0.00 sec)\par
+\par
+mysql> select * from fruits;\par
++----+--------+\par
+| id | name   |\par
++----+--------+\par
+|  1 | apple  |\par
+|  2 | mango  |\par
+|  3 | guava  |\par
+|  4 | pear   |\par
+|  5 | banana |\par
+|  6 | grapes |\par
+|  7 | kiwi   |\par
+|  8 | orange |\par
++----+--------+\par
+8 rows in set (0.00 sec)\par
+\par
+mysql> set autocommit=1;\par
+Query OK, 0 rows affected (0.00 sec)\par
+\par
+mysql> insert into fruits values(9,'papaya');\par
+Query OK, 1 row affected (0.01 sec)\par
+\par
+mysql> select * from fruits;\par
++----+--------+\par
+| id | name   |\par
++----+--------+\par
+|  1 | apple  |\par
+|  2 | mango  |\par
+|  3 | guava  |\par
+|  4 | pear   |\par
+|  5 | banana |\par
+|  6 | grapes |\par
+|  7 | kiwi   |\par
+|  8 | orange |\par
+|  9 | papaya |\par
++----+--------+\par
+9 rows in set (0.00 sec)\par
+\par
+mysql> rollback;\par
+Query OK, 0 rows affected (0.00 sec)\par
+\par
+mysql> select * from fruits;\par
++----+--------+\par
+| id | name   |\par
++----+--------+\par
+|  1 | apple  |\par
+|  2 | mango  |\par
+|  3 | guava  |\par
+|  4 | pear   |\par
+|  5 | banana |\par
+|  6 | grapes |\par
+|  7 | kiwi   |\par
+|  8 | orange |\par
+|  9 | papaya |\par
++----+--------+\par
+9 rows in set (0.00 sec)\par
+\par
+mysql> select@@port;\par
++--------+\par
+| @@port |\par
++--------+\par
+|   3306 |\par
++--------+\par
+1 row in set (0.00 sec)\par
+\par
+mysql> use mydb1;\par
+Database changed\par
+mysql> select@@port;\par
++--------+\par
+| @@port |\par
++--------+\par
+|   3306 |\par
++--------+\par
+1 row in set (0.00 sec)\par
+\par
+mysql> use ritu;\par
+Database changed\par
+mysql> show tables;\par
++----------------+\par
+| Tables_in_ritu |\par
++----------------+\par
+| book           |\par
+| days           |\par
+| department     |\par
+| emp            |\par
+| employee       |\par
+| fruits         |\par
+| lib            |\par
+| library        |\par
+| shirt          |\par
+| student        |\par
+| student1       |\par
+| studentt       |\par
+| users          |\par
++----------------+\par
+13 rows in set (0.02 sec)\par
+\par
+mysql>\par
+}
+ 
